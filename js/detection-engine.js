@@ -273,25 +273,51 @@ function scoreSign(item, ctx) {
 /* ==========================================================================
    computeJitter — มือนิ่งแค่ไหน
    --------------------------------------------------------------------------
-   วัดจากการขยับของปลายนิ้วทั้ง 5 ในพิกัดฝ่ามือ (ไม่สนใจว่ามือจะเลื่อนไปไหน
-   สนใจแค่ว่า "รูปทรงของมือ" นิ่งหรือไม่)
+   วัดจากการกระจายตัวของปลายนิ้วทั้ง 5 รอบตำแหน่งเฉลี่ยของตัวเอง
+   ในพิกัดฝ่ามือ (ไม่สนใจว่ามือจะเลื่อนไปไหน สนใจแค่ว่า "รูปทรงของมือ" นิ่งไหม)
+
+   ทำไมไม่วัดระยะขยับทีละเฟรม:
+     MediaPipe ส่งพิกัดที่สั่นเล็กน้อยทุกเฟรมแม้มือจะนิ่งสนิท การวัดทีละเฟรม
+     จึงอ่านค่าสัญญาณรบกวนแทนที่จะอ่านการเคลื่อนไหวจริง และยังพลาดการเลื่อนช้าๆ
+     (มือค่อยๆ ไหลออกนอกท่า ระยะต่อเฟรมน้อยมาก แต่รวมแล้วไปไกล)
+     การวัดการกระจายรอบค่าเฉลี่ยแก้ได้ทั้งสองอย่าง
+
+   หน่วย: เท่าของขนาดมือ (ระยะข้อมือถึงโคนนิ้วกลาง)
    ========================================================================== */
 function computeJitter(history) {
   if (history.length < 4) return 999;
 
-  const recent = history.slice(-Math.min(history.length, 10));
+  const recent = history.slice(-Math.min(history.length, 12));
+  const tipCount = recent[0].tips.length;
   let sum = 0;
   let count = 0;
 
-  for (let i = 1; i < recent.length; i++) {
-    const a = recent[i - 1].tips;
-    const b = recent[i].tips;
-    for (let k = 0; k < a.length; k++) {
-      sum += V.dist(a[k], b[k]);
-      count++;
+  /* คิดทีละนิ้ว แล้วเอา "นิ้วที่ไม่นิ่งที่สุด" เป็นตัวตัดสิน
+     ถ้าเฉลี่ยรวมทุกนิ้ว นิ้วเดียวที่สั่นแรงจะถูกอีกสี่นิ้วที่นิ่งกลบจนมองไม่เห็น */
+  let worst = 0;
+
+  for (let k = 0; k < tipCount; k++) {
+    let mx = 0, my = 0, mz = 0;
+    for (let i = 0; i < recent.length; i++) {
+      mx += recent[i].tips[k].x;
+      my += recent[i].tips[k].y;
+      mz += recent[i].tips[k].z;
     }
+    const mean = {
+      x: mx / recent.length,
+      y: my / recent.length,
+      z: mz / recent.length
+    };
+    let spread = 0;
+    for (let i = 0; i < recent.length; i++) {
+      spread += V.dist(recent[i].tips[k], mean);
+    }
+    spread /= recent.length;
+    if (spread > worst) worst = spread;
+    sum += spread;
+    count++;
   }
-  return count === 0 ? 999 : (sum / count) * 30;
+  return count === 0 ? 999 : worst;
 }
 
 /* ==========================================================================
