@@ -1,0 +1,12 @@
+{
+  "name": "sign-speak",
+  "version": "2.0.0",
+  "private": true,
+  "description": "เว็บฝึกภาษามือด้วยกล้อง ตรวจจับท่ามือในเบราว์เซอร์",
+  "scripts": {
+    "test": "node test/engine.test.js && node test/api.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

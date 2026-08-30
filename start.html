@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>เริ่มใช้งาน — Sign Speak</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">ข้ามไปยังเนื้อหาหลัก</a>
+
+<nav class="nav">
+  <a class="brand" href="index.html">
+    <span class="brand-mark" aria-hidden="true">✋</span>
+    Sign <span>Speak</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">หน้าแรก</a>
+    <a href="privacy.html">ความเป็นส่วนตัว</a>
+  </div>
+</nav>
+
+<main id="main" class="wrap narrow" style="padding-top: 34px; padding-bottom: 50px;">
+
+  <div class="steps" aria-label="ขั้นตอน">
+    <span class="step is-done"><b>1</b> แนะนำระบบ</span>
+    <span class="step-line"></span>
+    <span class="step is-active"><b>2</b> ตอบคำถามสั้นๆ</span>
+    <span class="step-line"></span>
+    <span class="step"><b>3</b> เริ่มฝึก</span>
+  </div>
+
+  <div class="card">
+    <h1 style="font-size: 1.65rem;">ก่อนเริ่ม ขอถามสั้นๆ ไม่กี่ข้อ</h1>
+    <p>
+      คำตอบเหล่านี้ช่วยให้เราปรับระบบให้ตรงกับคนที่ใช้จริง
+      <strong>เราไม่ถามชื่อ อีเมล หรือเบอร์โทร</strong> และไม่มีวิธีย้อนกลับมาหาว่าคำตอบชุดนี้เป็นของใคร
+      ข้อที่ไม่มีเครื่องหมาย <span style="color: var(--bad)">*</span> ข้ามได้
+    </p>
+
+    <form id="onboarding" novalidate>
+
+      <!-- กับดักบอท: คนจริงมองไม่เห็นช่องนี้ ถ้ามีการกรอกแปลว่าเป็นบอท -->
+      <div class="honeypot" aria-hidden="true">
+        <label for="website">เว็บไซต์</label>
+        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label for="role">1. คุณคือใครในบทเรียนนี้ <span style="color: var(--bad)">*</span></label>
+        <select id="role" required>
+          <option value="" disabled selected>— เลือกหนึ่งข้อ —</option>
+          <option value="deaf_hoh">ผู้ที่มีความบกพร่องทางการได้ยิน</option>
+          <option value="family">คนใกล้ชิดหรือครอบครัวของผู้ที่มีความบกพร่องทางการได้ยิน</option>
+          <option value="teacher">ครู ล่ามภาษามือ หรือบุคลากรที่ทำงานด้านนี้</option>
+          <option value="student">นักเรียนหรือนักศึกษาที่เรียนวิชาที่เกี่ยวข้อง</option>
+          <option value="general">ผู้สนใจทั่วไป</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="age">2. ช่วงอายุ</label>
+        <p class="help">ถามเป็นช่วง ไม่ใช่ตัวเลข เพื่อไม่ให้ระบุตัวตนได้</p>
+        <select id="age">
+          <option value="" selected>— ไม่ระบุ —</option>
+          <option value="under18">ต่ำกว่า 18 ปี</option>
+          <option value="18-24">18–24 ปี</option>
+          <option value="25-34">25–34 ปี</option>
+          <option value="35-49">35–49 ปี</option>
+          <option value="50-64">50–64 ปี</option>
+          <option value="65plus">65 ปีขึ้นไป</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="level">3. ตอนนี้คุณรู้ภาษามือมากแค่ไหน <span style="color: var(--bad)">*</span></label>
+        <select id="level" required>
+          <option value="" disabled selected>— เลือกหนึ่งข้อ —</option>
+          <option value="none">ยังไม่รู้เลย เพิ่งเริ่มต้น</option>
+          <option value="few">รู้บ้างไม่กี่ท่า</option>
+          <option value="basic">สื่อสารพื้นฐานได้</option>
+          <option value="fluent">ใช้สื่อสารในชีวิตประจำวันได้คล่อง</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="goal">4. เป้าหมายหลักของคุณคืออะไร <span style="color: var(--bad)">*</span></label>
+        <select id="goal" required>
+          <option value="" disabled selected>— เลือกหนึ่งข้อ —</option>
+          <option value="family_comm">สื่อสารกับคนในครอบครัวหรือคนใกล้ตัว</option>
+          <option value="work">ใช้ในงานหรือการเรียน</option>
+          <option value="volunteer">ทำงานอาสาหรือช่วยเหลือผู้อื่น</option>
+          <option value="curiosity">สนใจอยากรู้ ยังไม่มีเป้าหมายเฉพาะ</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="reason">5. อยากเล่าเพิ่มเติมไหมว่าทำไมถึงอยากเรียนภาษามือ</label>
+        <p class="help">ไม่บังคับ และกรุณาอย่าใส่ชื่อจริงหรือข้อมูลที่ระบุตัวคุณหรือคนอื่นได้</p>
+        <textarea id="reason" rows="3" maxlength="500"
+          placeholder="เช่น อยากคุยกับหลานให้เข้าใจกันมากขึ้น..."></textarea>
+      </div>
+
+      <div class="field">
+        <label for="referral">6. รู้จัก Sign Speak จากที่ไหน</label>
+        <select id="referral">
+          <option value="" selected>— ไม่ระบุ —</option>
+          <option value="social">โซเชียลมีเดีย</option>
+          <option value="friend">เพื่อนหรือคนรู้จักแนะนำ</option>
+          <option value="search">ค้นหาเจอเอง</option>
+          <option value="school">โรงเรียนหรือสถาบันการศึกษา</option>
+          <option value="hospital">โรงพยาบาลหรือหน่วยงานด้านสุขภาพ</option>
+          <option value="other">อื่นๆ</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="check" for="consent">
+          <input type="checkbox" id="consent" required>
+          <span>
+            ฉันยินยอมให้เก็บคำตอบข้างต้นแบบไม่ระบุตัวตน เพื่อนำไปปรับปรุงระบบ
+            และเข้าใจแล้วว่าจะไม่มีการเก็บชื่อ อีเมล หรือภาพจากกล้อง
+            <a href="privacy.html" target="_blank" rel="noopener">อ่านรายละเอียด</a>
+          </span>
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn--primary" id="submitBtn" style="width: 100%;">
+        เริ่มฝึกภาษามือ
+      </button>
+
+      <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+
+      <p style="font-size: .85rem; color: var(--muted); margin-top: 6px;">
+        ถ้าส่งไม่สำเร็จ คุณยังเข้าไปฝึกได้ตามปกติ — <a href="practice.html">ข้ามไปหน้าฝึกเลย</a>
+      </p>
+    </form>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <span>Sign Speak</span>
+    <span><a href="privacy.html">นโยบายความเป็นส่วนตัว</a></span>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/form.js"></script>
+</body>
+</html>

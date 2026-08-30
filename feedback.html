@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ส่งความคิดเห็น — Sign Speak</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a class="brand" href="index.html">
+    <span class="brand-mark" aria-hidden="true">✋</span>
+    Sign <span>Speak</span>
+  </a>
+  <div class="nav-links">
+    <a href="practice.html">ฝึกภาษามือ</a>
+    <a href="feedback.html" class="is-active">ส่งความคิดเห็น</a>
+    <a href="privacy.html">ความเป็นส่วนตัว</a>
+  </div>
+</nav>
+
+<main class="wrap narrow" style="padding-top: 34px; padding-bottom: 50px;">
+  <div class="card">
+    <h1 style="font-size: 1.6rem;">ระบบใช้งานเป็นอย่างไรบ้าง</h1>
+    <p>
+      ความคิดเห็นของคุณคือสิ่งที่ทำให้ระบบแม่นขึ้นได้จริง
+      โดยเฉพาะเรื่องท่าที่ทำถูกแล้วแต่ระบบไม่ยอมผ่าน หรือท่าที่ผ่านทั้งที่ทำผิด
+      แบบฟอร์มนี้ไม่เก็บข้อมูลที่ระบุตัวคุณ
+    </p>
+
+    <form id="reviewForm" novalidate>
+      <div class="honeypot" aria-hidden="true">
+        <label for="website">เว็บไซต์</label>
+        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label for="rating">โดยรวมแล้วพอใจแค่ไหน <span style="color: var(--bad)">*</span></label>
+        <select id="rating" required>
+          <option value="" disabled selected>— เลือกหนึ่งข้อ —</option>
+          <option value="5">พอใจมาก ใช้งานได้ตามที่คาด</option>
+          <option value="4">พอใจ มีจุดที่ปรับได้อีกเล็กน้อย</option>
+          <option value="3">พอใช้ได้ แต่ยังติดขัดอยู่บ้าง</option>
+          <option value="2">ยังใช้ยาก ต้องปรับอีกมาก</option>
+          <option value="1">ใช้งานไม่ได้เลย</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="accuracy">ความแม่นยำของการตรวจจับเป็นอย่างไร</label>
+        <select id="accuracy">
+          <option value="" selected>— ไม่ระบุ —</option>
+          <option value="good">แม่นดี ทำถูกก็ผ่าน ทำผิดก็ไม่ผ่าน</option>
+          <option value="too_strict">เข้มเกินไป ทำถูกแล้วแต่ไม่ยอมผ่าน</option>
+          <option value="too_loose">หลวมเกินไป ทำผิดแล้วยังผ่าน</option>
+          <option value="unstable">ไม่แน่นอน บางครั้งผ่าน บางครั้งไม่ผ่าน</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="difficulty">ท่าไหนที่ยากเป็นพิเศษ</label>
+        <p class="help">พิมพ์ตัวอักษรหรือตัวเลขได้เลย เช่น M, N, S</p>
+        <input class="input" type="text" id="difficulty" maxlength="120"
+               placeholder="เช่น M กับ N แยกกันไม่ออก">
+      </div>
+
+      <div class="field">
+        <label for="feedback">ข้อเสนอแนะเพิ่มเติม</label>
+        <p class="help">กรุณาอย่าใส่ชื่อจริงหรือข้อมูลที่ระบุตัวคุณหรือคนอื่นได้</p>
+        <textarea id="feedback" rows="5" maxlength="1000"
+          placeholder="เล่าได้ทั้งสิ่งที่ชอบและสิ่งที่อยากให้แก้..."></textarea>
+      </div>
+
+      <button type="submit" class="btn btn--primary" id="reviewBtn" style="width: 100%;">
+        ส่งความคิดเห็น
+      </button>
+      <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <p style="margin-top: 20px;"><a href="practice.html">← กลับไปหน้าฝึก</a></p>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <span>Sign Speak</span>
+    <span><a href="privacy.html">นโยบายความเป็นส่วนตัว</a></span>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/form.js"></script>
+</body>
+</html>

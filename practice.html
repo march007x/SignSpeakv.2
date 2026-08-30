@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ฝึกภาษามือ — Sign Speak</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">ข้ามไปยังเนื้อหาหลัก</a>
+
+<nav class="nav">
+  <a class="brand" href="index.html">
+    <span class="brand-mark" aria-hidden="true">✋</span>
+    Sign <span>Speak</span>
+  </a>
+  <div class="nav-links">
+    <a href="practice.html" class="is-active">ฝึกภาษามือ</a>
+    <a href="feedback.html">ส่งความคิดเห็น</a>
+    <a href="privacy.html">ความเป็นส่วนตัว</a>
+  </div>
+</nav>
+
+<main id="main" class="wrap">
+  <div class="practice">
+
+    <!-- ================= ฝั่งกล้อง ================= -->
+    <section class="card stage" aria-label="กล้องและการตรวจจับ">
+      <div class="video-shell">
+        <video id="webcam" autoplay playsinline muted aria-label="ภาพจากกล้องของคุณ"></video>
+        <canvas id="overlay" aria-hidden="true"></canvas>
+
+        <div class="status status--muted" id="statusPill" role="status" aria-live="polite">
+          <span id="statusText">กำลังเตรียมกล้อง...</span>
+        </div>
+      </div>
+
+      <div class="stage-foot">
+        <button type="button" class="btn btn--ghost btn--sm" id="camBtn">เปิดกล้อง</button>
+
+        <div class="progress" role="progressbar" aria-label="ความคืบหน้าในการค้างท่า"
+             aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <i id="progressBar"></i>
+        </div>
+        <span class="progress-pct" id="progressPct">0%</span>
+
+        <p class="cam-hint" id="camHint">
+          ภาพจากกล้องประมวลผลในเครื่องคุณ ไม่ถูกส่งออกไปไหน
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= ฝั่งข้อมูลท่า ================= -->
+    <div class="side">
+
+      <section class="card" aria-label="ท่าที่กำลังฝึก">
+        <div class="sign-head">
+          <div class="diagram" id="diagram" aria-hidden="true"></div>
+          <div>
+            <h2 id="signTitle">กำลังโหลด...</h2>
+            <p class="sign-instruction" id="signInstruction"></p>
+          </div>
+        </div>
+        <p class="sign-note" id="signNote" hidden></p>
+
+        <div class="score-line" style="margin-top: 18px;">
+          ผ่านแล้ว <b id="sessionScore">0</b> จาก <span id="sessionTotal">0</span> ท่าในชุดนี้
+        </div>
+      </section>
+
+      <section class="card" aria-label="เลือกท่าที่จะฝึก">
+        <div class="tabs" id="setTabs" role="tablist">
+          <button type="button" class="tab is-active" data-set="alphabet"
+                  role="tab" aria-selected="true">ตัวอักษร ASL</button>
+          <button type="button" class="tab" data-set="number"
+                  role="tab" aria-selected="false">ตัวเลข ASL</button>
+          <button type="button" class="tab" data-set="thsl"
+                  role="tab" aria-selected="false">ภาษามือไทย</button>
+        </div>
+
+        <p id="thslNotice" class="sign-note" hidden style="border-left-color: var(--accent);">
+          คลังท่าภาษามือไทยยังไม่มีท่าที่ผ่านการตรวจสอบ
+          ระบบเตรียมโครงสร้างไว้แล้ว แต่จะไม่ใส่ท่าที่ยังยืนยันความถูกต้องไม่ได้
+          เพราะการฝึกท่าผิดแย่กว่าการไม่มีท่าให้ฝึก
+          วิธีเพิ่มท่าอยู่ในไฟล์ <code>js/vocab-thsl.js</code>
+        </p>
+
+        <div class="chips" id="vocabList"></div>
+
+        <p style="font-size: .82rem; color: var(--muted); margin: 14px 0 0;">
+          กดปุ่มลูกศรซ้าย-ขวาบนคีย์บอร์ดเพื่อเปลี่ยนท่าได้ ·
+          ท่าที่มีเครื่องหมาย → ต้องมีการเคลื่อนไหว
+        </p>
+      </section>
+
+      <section class="card" aria-label="ค่าตรวจสอบสำหรับปรับจูน">
+        <button type="button" class="btn btn--ghost btn--sm" id="debugToggle"
+                aria-expanded="false" aria-controls="debugPanel" style="width: 100%;">
+          แสดงค่าตรวจสอบ
+        </button>
+        <div id="debugPanel" hidden style="margin-top: 14px;">
+          <p style="font-size: .82rem; color: var(--muted); margin-bottom: 10px;">
+            ค่าที่ระบบเห็นแบบเรียลไทม์ ใช้ตอนอยากปรับความไวในไฟล์
+            <code>js/config.js</code> ให้เข้ากับกล้องและแสงของคุณ
+          </p>
+          <div id="debugBody"></div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<div class="toast" id="successToast" role="status" aria-live="assertive" hidden>
+  <span aria-hidden="true">✓</span>
+  <span id="successText"></span>
+</div>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <span>Sign Speak</span>
+    <span><a href="privacy.html">นโยบายความเป็นส่วนตัว</a></span>
+  </div>
+</footer>
+
+<!-- MediaPipe Hands -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
+<!-- ระบบของเรา — ลำดับสำคัญ: config → hand-frame → engine → คลังท่า → หน้าเว็บ -->
+<script src="js/config.js"></script>
+<script src="js/hand-frame.js"></script>
+<script src="js/detection-engine.js"></script>
+<script src="js/hand-diagram.js"></script>
+<script src="js/vocab-asl.js"></script>
+<script src="js/vocab-thsl.js"></script>
+<script src="js/practice.js"></script>
+</body>
+</html>
